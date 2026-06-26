@@ -4,7 +4,7 @@
 
 <h1 align="center">Aidly</h1>
 
-<p align="center"><em>Hands-free, on-device web accessibility for everyone.</em></p>
+<p align="center"><em>Hands-free, on device web accessibility for everyone.</em></p>
 
 **Aidly** is a Chrome (Manifest V3) extension that makes the web more accessible for
 everyone. It bundles a suite of reading aids, low-vision and color-blindness support,
