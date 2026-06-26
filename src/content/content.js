@@ -1,8 +1,8 @@
 // [Keep magnifier vars and function before adding chrome message listener]
-/*Size is  set in pixels... supports being written as: '250px' */
+/****** Size is  set in pixels... supports being written as: '250px' *******/
 var magnifierSize = 50;
 
-/*How many times magnification of image on page.*/
+/******* How many times magnification of image on page. *******/
 var magnification = 3;
 
 function magnifier() {
@@ -268,7 +268,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       });
     }
   }
-  // ---- Bionic Reading: bold the leading half of each word ----
+  //****** ---- Bionic Reading: bold the leading half of each word ---- ******
   if (message.todo == "bionic") {
     var BIONIC_SEL = "p, li, td, span, h1, h2, h3, h4, h5, h6, a, blockquote, dd, dt";
     if (message.checkedButton == 0) {
@@ -312,7 +312,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Line & letter spacing ----
+  //****** ---- Line & letter spacing ---- ******
   if (message.todo == "spacing") {
     var old = document.getElementById("aidly-spacing");
     if (old) old.remove();
@@ -329,7 +329,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Syllable splitter: insert soft hyphenation points ----
+  //****** ---- Syllable splitter: insert soft hyphenation points ---- ******
   if (message.todo == "syllable") {
     var SYL_SEL = "p, li, td, h1, h2, h3, h4, h5, h6, blockquote, dd";
     if (message.checkedButton == 0) {
@@ -372,7 +372,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Reader Mode: declutter to a clean article ----
+  //****** ---- Reader Mode: declutter to a clean article ---- ******
   if (message.todo == "readerMode") {
     var existing = document.getElementById("aidly-reader");
     if (message.checkedButton == 0) {
@@ -420,7 +420,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Hover Dictionary: hover a word -> definition tooltip ----
+  //****** ---- Hover Dictionary: hover a word -> definition tooltip ---- ******
   if (message.todo == "hoverDict") {
     if (message.checkedButton == 0) {
       if (window.__aidlyDictMove) {
@@ -465,7 +465,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Read Aloud whole page (TTS) with word-by-word highlight ----
+  //****** ---- Read Aloud whole page (TTS) with word-by-word highlight ---- ******
   if (message.todo == "readAloud") {
     var synth = window.speechSynthesis;
     if (message.action == "stop") {
@@ -493,7 +493,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
       }
       var u = new SpeechSynthesisUtterance(text);
       u.rate = message.rate || 1.0;
-      // highlight a small banner showing the spoken word (lightweight, robust)
+      //****** highlight a small banner showing the spoken word (lightweight, robust) ******
       var banner = document.getElementById("aidly-tts-banner");
       if (!banner) {
         banner = document.createElement("div");
@@ -515,7 +515,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Color-blind correction (daltonization) with mode + intensity ----
+  //****** ---- Color-blind correction (daltonization) with mode + intensity ---- ******
   if (message.todo == "colorBlindCorrect") {
     var CB_BASE = {
       // Corrected = M * RGB  (daltonization correction matrices)
@@ -571,7 +571,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     window.print();
   }
 
-  // ---- Reading Ruler: a band that follows the cursor; dims the rest ----
+  //****** ---- Reading Ruler: a band that follows the cursor; dims the rest ---- ******
   if (message.todo == "readingRuler") {
     if (message.checkedButton == 0) {
       if (window.__aidlyRulerMove) {
@@ -651,20 +651,20 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     }
   }
 
-  // ---- Auto Scroll: gently scroll the page at a steady pace ----
+  //****** ---- Auto Scroll: gently scroll the page at a steady pace ---- ******
   if (message.todo == "autoScroll") {
     if (window.__aidlyAutoScroll) {
       clearInterval(window.__aidlyAutoScroll);
       window.__aidlyAutoScroll = null;
     }
     if (message.checkedButton != 0) {
-      // speed is 1..10 -> pixels moved per ~16ms tick
+      //****** speed is 1..10 -> pixels moved per ~16ms tick ******
       var pxPerTick = Math.max(1, Number(message.speed) || 3);
       window.__aidlyAutoScroll = setInterval(function () {
         var before = window.scrollY || window.pageYOffset;
         window.scrollBy(0, pxPerTick);
         var after = window.scrollY || window.pageYOffset;
-        // reached the bottom: stop automatically
+        //****** reached the bottom: stop automatically ******
         if (after === before) {
           clearInterval(window.__aidlyAutoScroll);
           window.__aidlyAutoScroll = null;
