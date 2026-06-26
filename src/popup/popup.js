@@ -1,6 +1,6 @@
 var assistant_start = 0;
 
-// Building Font palette within popup.html [Keep this above popup load function]
+//****** Building Font palette within popup.html [Keep this above popup load function] ******
 var colors = [
   "#1FBC9C",
   "#1CA085",
@@ -57,18 +57,18 @@ for (var i = 0; i < colors.length; i++) {
   document.getElementsByClassName("ts-color-picker")[0].appendChild(label);
 }
 
-// On popup load function
+//****** On popup load function ******
 $(function () {
   chrome.storage.sync.get("assistant_enable", function (stored) {
     if (stored.assistant_enable) {
-      // enabled but not yet listening; click the mic to start talking
+      //****** enabled but not yet listening; click the mic to start talking ******
       $(".activation-button").attr("src", "/assets/images/microphone-off.png");
     } else {
       $(".activation-button").attr("src", "/assets/images/microphone-disable.png");
     }
   });
 
-  // Font Slider Setting
+  //****** Font Slider Setting ******
   chrome.storage.sync.get("fontSizeSlider", function (stored) {
     $("#fontSizeSlider_value").html(stored.fontSizeSlider);
     $("#fontSizeSlider").val(stored.fontSizeSlider);
@@ -110,7 +110,7 @@ $(function () {
     }
   });
 
-  // Font Color Button Setting
+  //****** Font Color Button Setting ******
   chrome.storage.sync.get("fontColorButton", function (stored) {
     $("#fontColorButton").prop("checked", stored.fontColorButton);
 
@@ -121,34 +121,34 @@ $(function () {
     }
   });
 
-  // Font Color Palette Setting
+  //****** Font Color Palette Setting ******
   chrome.storage.sync.get("fontColorId", function (stored) {
     $("#" + stored.fontColorId).attr("checked", true);
   });
 
-  // Magnify Button Setting
+  //****** Magnify Button Setting ******
   chrome.storage.sync.get("magnifyButton", function (stored) {
     $("#magnifierButton").prop("checked", stored.magnifyButton);
   });
 
-  // Magnifier Size Setting
+  //****** Magnifier Size Setting ******
   chrome.storage.sync.get("magnifierSizeSlider", function (stored) {
     $("#magnifierSizeSlider_value").html(stored.magnifierSizeSlider);
     $("#magnifierSizeSlider").val(stored.magnifierSizeSlider);
   });
 
-  // Magnification Setting
+  //****** Magnification Setting ******
   chrome.storage.sync.get("magnificationSlider", function (stored) {
     $("#magnificationSlider_value").html(stored.magnificationSlider);
     $("#magnificationSlider").val(stored.magnificationSlider);
   });
 
-  // Image Veil Setting
+  //****** Image Veil Setting ******
   chrome.storage.sync.get("imageVeilButton", function (stored) {
     $("#imageVeilButton").prop("checked", stored.imageVeilButton);
   });
 
-  // Highlight Words Setting
+  //****** Highlight Words Setting ******
   chrome.storage.sync.get("highlightWordsButton", function (stored) {
     $("#highlightWordsButton").prop("checked", stored.highlightWordsButton);
   });
@@ -158,7 +158,7 @@ $(function () {
     $("#emphasizeLinksButton").prop("checked", stored.emphasizeLinksButton);
   });
 
-  // Text Stroke Setting
+  //****** Text Stroke Setting ******
   chrome.storage.sync.get("textStrokeButton", function (stored) {
     $("#textStrokeButton").prop("checked", stored.textStrokeButton);
   });
@@ -167,7 +167,7 @@ $(function () {
   });
 });
 
-// Font Type || Font Family button bind
+//****** Font Type || Font Family button bind ******
 $("#fontTypeButton").bind("change", function () {
   if ($(this).is(":checked")) {
     document.getElementById("font-type-switch-header").textContent = "On";
@@ -191,7 +191,7 @@ $("#fontTypeButton").bind("change", function () {
   chrome.storage.sync.set({ ["fontTypeButton"]: $(this).is(":checked") });
 });
 
-// Font Type || Font Family drop down bind
+//****** Font Type || Font Family drop down bind ******
 $("#fontTypeDropDown").change(function (data) {
   if ($("#fontTypeButton").is(":checked")) {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -215,7 +215,7 @@ $("#fontTypeDropDown").change(function (data) {
   // });
 });
 
-// Cursor Type Button
+//****** Cursor Type Button ******
 $("#cursorTypeButton").bind("change", function () {
   if ($(this).is(":checked")) {
     document.getElementById("cursor-type-switch-header").textContent = "On";
