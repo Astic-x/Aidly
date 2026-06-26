@@ -1,0 +1,77 @@
+{
+  "manifest_version": 3,
+  "name": "Aidly",
+  "short_name": "Aidly",
+  "version": "1.0.0",
+  "description": "Aidly makes the web accessible for everyone: reading aids, dyslexia and color-blind support, and hands-free head/eye/palm control.",
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": ["activeTab", "storage", "contextMenus", "tabs", "scripting"],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "https://api.dictionaryapi.dev/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon-16.png",
+      "32": "assets/icons/icon-32.png",
+      "48": "assets/icons/icon-48.png",
+      "128": "assets/icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["src/content/content.css"],
+      "js": [
+        "vendor/jquery.min.js",
+        "vendor/jquery.lettering.min.js",
+        "src/content/content.js"
+      ]
+    }
+  ],
+  "options_page": "src/options/options.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/images/*",
+        "assets/fonts/*",
+        "assets/fonts/css/*",
+        "models/*",
+        "vendor/mediapipe/*",
+        "vendor/mediapipe/wasm/*"
+      ],
+      "matches": ["http://*/*", "https://*/*", "file://*/*"]
+    }
+  ],
+  "commands": {
+    "toggle-image-veil": {
+      "suggested_key": { "default": "Alt+V" },
+      "description": "Toggle Image Veil"
+    },
+    "toggle-highlight-words": {
+      "suggested_key": { "default": "Alt+Shift+H" },
+      "description": "Toggle Highlight Words"
+    },
+    "toggle-magnifier": {
+      "suggested_key": { "default": "Alt+Shift+M" },
+      "description": "Toggle Magnifier"
+    },
+    "toggle-emphasize-links": {
+      "suggested_key": { "default": "Alt+Shift+E" },
+      "description": "Toggle Emphasize Links"
+    }
+  }
+}

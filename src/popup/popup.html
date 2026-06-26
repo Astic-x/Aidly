@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aidly</title>
+    <script src="/vendor/jquery.min.js"></script>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="header">
+      <img src="/assets/icons/icon-128.png" />
+      <h1>Aidly</h1>
+    </div>
+
+    <!-- Actions -->
+    <div class="font-header">
+      <img src="/assets/images/actions.png" />
+      <p>Actions</p>
+    </div>
+
+    <div class="actions-wrapper">
+      <div class="actions">
+        <input
+          type="image"
+          id="assistant_start"
+          class="activation-button"
+          src="/assets/images/microphone-off.png"
+          alt="Submit Form"
+        />
+      </div>
+    </div>
+
+    <!-- Font Type -->
+    <div class="font-header">
+      <img src="/assets/images/font.png" />
+      <p>Font</p>
+    </div>
+
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Font Type</p>
+        <div class="select-wrapper">
+          <select id="fontTypeDropDown" class="select">
+            <option value="open-dyslexic-regular">Open Dyslexic</option>
+            <option value="lexend-regular">Lexend</option>
+            <option value="sign-language">Sign Language</option>
+            <option value="arial-regular">Arial</option>
+            <option value="verdana-regular">Verdana</option>
+            <option value="impact-regular">Impact</option>
+            <option value="comic-sans-ms-regular">Comic Sans MS</option>
+          </select>
+        </div>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="font-type-switch-header" class="font-type-switch-header">Off</p>
+        <label class="switch">
+          <input type="checkbox" id="fontTypeButton" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Focus Mode -->
+    <div class="font-header">
+      <img src="/assets/images/focus.png" />
+      <p>Focus Mode</p>
+    </div>
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Image Veil</p>
+          <p style="font-size: 15px">Enable to focus on text better.</p>
+        </div>
+        <div>
+          <label class="switch">
+            <input type="checkbox" id="imageVeilButton" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Highlight Words</p>
+          <p style="font-size: 15px">Highlight words as you read.</p>
+        </div>
+        <div>
+          <label class="switch">
+            <input type="checkbox" id="highlightWordsButton" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Font Color -->
+    <div class="font-header">
+      <img src="/assets/images/color.png" />
+      <p>Font Color</p>
+    </div>
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Font Color</p>
+        <div class="color-picker"></div>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="font-color-switch-header" class="font-type-switch-header">Off</p>
+        <label class="switch">
+          <input type="checkbox" id="fontColorButton" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Magnifier -->
+    <div class="font-header">
+      <img src="/assets/images/magnifier.png" />
+      <p>Magnifier</p>
+    </div>
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Magnifier</p>
+          <p style="font-size: 15px">Hover to magnify images.</p>
+        </div>
+        <div>
+          <label class="switch">
+            <input type="checkbox" id="magnifierButton" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-type-wrapper">
+      <div
+        class="font-type-select-wrapper"
+        style="margin-right: 20px; padding-right: 5px"
+      >
+        <p class="font-type-select-header">Magnifier Size</p>
+        <form id="magnifierSize">
+          <input
+            type="range"
+            id="magnifierSizeSlider"
+            min="20"
+            max="100"
+            step="10"
+            value="50"
+          />
+          <span style="color: white" id="magnifierSizeSlider_value">50</span>
+        </form>
+      </div>
+
+      <div class="font-type-select-wrapper" style="padding-right: 0px">
+        <p class="font-type-select-header">Magnification</p>
+        <form id="magnification">
+          <input
+            type="range"
+            id="magnificationSlider"
+            min="1"
+            max="5"
+            value="3"
+          />
+          <span style="color: white" id="magnificationSlider_value">3</span>
+        </form>
+      </div>
+    </div>
+
+    <!-- Font Size -->
+    <div class="font-header">
+      <img src="/assets/images/font.png" />
+      <p>Font Size</p>
+    </div>
+
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Font Size</p>
+        <form id="fontSize">
+          <input
+            type="range"
+            id="fontSizeSlider"
+            min="1"
+            max="100"
+            value="50"
+          />
+          <span style="color: white" id="fontSizeSlider_value">50</span>
+        </form>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="font-size-switch-header" class="font-type-switch-header">Off</p>
+        <label class="switch">
+          <input type="checkbox" id="fontSizeButton" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Color Blindness -->
+    <div class="font-header">
+      <img src="/assets/images/colorblind.png" />
+      <p>Color Blind</p>
+    </div>
+
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Color-Blind Correction</p>
+        <div class="select-wrapper">
+          <select id="cbMode" class="select">
+            <option value="deuteranopia">Deuteranopia (green-weak)</option>
+            <option value="protanopia">Protanopia (red-weak)</option>
+            <option value="tritanopia">Tritanopia (blue-weak)</option>
+          </select>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px; margin-top:16px;">
+          <span style="color:white; font-size:16px; min-width:80px;">Intensity</span>
+          <input type="range" id="cbIntensitySlider" min="0" max="100" value="100" style="flex:1;" />
+          <span style="color:white; font-size:16px; min-width:46px; text-align:right;"><span id="cbIntensitySlider_value">100</span>%</span>
+        </div>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="color-blind-switch-header" class="font-type-switch-header">Off</p>
+        <label class="switch">
+          <input type="checkbox" id="colorBlindButton" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Emphasize Links</p>
+          <p style="font-size: 15px">
+            Add multi-color underline to hyperlinks.
+          </p>
+        </div>
+        <div>
+          <label class="switch">
+            <input type="checkbox" id="emphasizeLinksButton" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Text Stroke Color</p>
+        <div class="ts-color-picker"></div>
+      </div>
+
+      <div class="color-blindness">
+        <div class="focus-mode-header">
+          <p>Text Stroke</p>
+        </div>
+        <div>
+          <label class="switch">
+            <input type="checkbox" id="textStrokeButton" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="font-header">
+      <img src="/assets/images/cursor.png" />
+      <p>Cursor</p>
+    </div>
+
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Cursor Type</p>
+        <div class="select-wrapper">
+          <select id="cursorTypeDropDown" class="select">
+            <option value="arrow.png">Arrow Pointer</option>
+            <option value="black.cur">Black Mouse Pointer</option>
+            <option value="pencil.png">Pencil Pointer</option>
+          </select>
+        </div>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="cursor-type-switch-header" class="font-type-switch-header">
+          Off
+        </p>
+        <label class="switch">
+          <input type="checkbox" id="cursorTypeButton" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="font-header">
+      <img src="/assets/images/printer.png" />
+      <p>Print Screen</p>
+    </div>
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Print</p>
+          <p style="font-size: 15px">Print the current page.</p>
+        </div>
+        <div style="margin-right: 20px">
+          <label class="button-switch">
+            <input
+              type="button"
+              class="printButton"
+              id="printjob"
+              value="Print"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="font-header">
+      <img src="/assets/images/camera.png" />
+      <p>Screenshot</p>
+    </div>
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Screenshot</p>
+          <p style="font-size: 15px">Take a screenshot of the current page.</p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="button-switch">
+            <input
+              type="button"
+              class="screenshotButton"
+              id="screenshotClick"
+              value="Capture"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bionic Reading -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Bionic Reading</p>
+          <p style="font-size: 15px">Bold the first half of each word to guide your eyes.</p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="switch"><input type="checkbox" id="bionicButton" /><span class="slider round"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Read Aloud -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Read Aloud</p>
+          <p style="font-size: 15px">Read the whole page aloud.</p>
+        </div>
+      </div>
+      <div style="padding: 0 16px 14px; display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; gap:8px;">
+          <button class="screenshotButton" id="readAloudPlay" value="Play" style="flex:1;">Play</button>
+          <button class="screenshotButton" id="readAloudPause" value="Pause" style="flex:1;">Pause</button>
+          <button class="screenshotButton" id="readAloudStop" value="Stop" style="flex:1;">Stop</button>
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="min-width:70px; font-size:14px;">Speed</span>
+          <input type="range" id="readAloudRateSlider" min="50" max="200" value="100" style="flex:1;" />
+          <span id="readAloudRateSlider_value" style="min-width:42px; text-align:right; font-size:14px;">100</span>%
+        </div>
+      </div>
+    </div>
+
+    <!-- Line & Letter Spacing -->
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Text Spacing</p>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:white; font-size:16px; min-width:60px;">Line</span>
+            <input type="range" id="lineSpacingSlider" min="100" max="300" value="180" style="flex:1;" />
+            <span style="color:white; font-size:16px; min-width:42px; text-align:right;"><span id="lineSpacingSlider_value">1.8</span></span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:white; font-size:16px; min-width:60px;">Letter</span>
+            <input type="range" id="letterSpacingSlider" min="0" max="8" value="0" style="flex:1;" />
+            <span style="color:white; font-size:16px; min-width:42px; text-align:right;"><span id="letterSpacingSlider_value">0</span> px</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px;">
+            <span style="color:white; font-size:16px; min-width:60px;">Word</span>
+            <input type="range" id="wordSpacingSlider" min="0" max="16" value="0" style="flex:1;" />
+            <span style="color:white; font-size:16px; min-width:42px; text-align:right;"><span id="wordSpacingSlider_value">0</span> px</span>
+          </div>
+        </div>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="spacing-switch-header" class="font-type-switch-header">Off</p>
+        <label class="switch"><input type="checkbox" id="spacingButton" /><span class="slider round"></span></label>
+      </div>
+    </div>
+
+    <!-- Reader Mode -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Reader Mode</p>
+          <p style="font-size: 15px">Strip ads &amp; clutter — clean article only.</p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="switch"><input type="checkbox" id="readerModeButton" /><span class="slider round"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Auto Scroll -->
+    <div class="font-type-wrapper">
+      <div class="font-type-select-wrapper">
+        <p class="font-type-select-header">Auto Scroll</p>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="color:white; font-size:16px; min-width:60px;">Speed</span>
+          <input type="range" id="autoScrollSlider" min="1" max="10" value="3" style="flex:1;" />
+          <span style="color:white; font-size:16px; min-width:42px; text-align:right;"><span id="autoScrollSlider_value">3</span></span>
+        </div>
+        <p style="font-size: 13px; color:#9aa6ae; margin:10px 0 0;">Let the page scroll itself at a steady pace while you read.</p>
+      </div>
+      <div class="font-type-switch-wrapper">
+        <p id="auto-scroll-switch-header" class="font-type-switch-header">Off</p>
+        <label class="switch"><input type="checkbox" id="autoScrollButton" /><span class="slider round"></span></label>
+      </div>
+    </div>
+
+    <!-- Syllable Splitter -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Syllables</p>
+          <p style="font-size: 15px">Break long words into syl·la·bles.</p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="switch"><input type="checkbox" id="syllableButton" /><span class="slider round"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hover Dictionary -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Dictionary</p>
+          <p style="font-size: 15px">Double-click any word for its definition.</p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="switch"><input type="checkbox" id="hoverDictButton" /><span class="slider round"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reading Ruler -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Reading Ruler</p>
+          <p style="font-size: 15px">
+            A highlight band follows your cursor and dims the rest of the page.
+          </p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="switch">
+            <input type="checkbox" id="readingRulerButton" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eye Control -->
+    <div class="focus-mode-wrapper">
+      <div class="focus-mode">
+        <div class="focus-mode-header">
+          <p>Eye Control</p>
+          <p style="font-size: 15px">
+            Scroll, screenshot &amp; zoom with your eyes. Opens a small camera window.
+          </p>
+        </div>
+        <div style="margin-right: 48px">
+          <label class="button-switch">
+            <input
+              type="button"
+              class="screenshotButton"
+              id="eyeControlOpen"
+              value="Open"
+            />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div id="snackbar">
+      To enable Voice Recognition right click on Aidly and click on Options
+    </div>
+  </body>
+  <script src="popup.js"></script>
+</html>

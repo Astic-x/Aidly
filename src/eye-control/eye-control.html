@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aidly — Head &amp; Eye Control</title>
+  <style>
+    :root {
+      --bg: #121212;
+      --card: #202020;
+      --card2: #2a2a2a;
+      --line: #333333;
+      --text: #ffffff;
+      --muted: #aaaaaa;
+      --amber: #1e78c2;
+      --amber-d: #1b69a8;
+      --red: #e8503a;
+      --green: #1e78c2;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--text); }
+    #app { width: 380px; margin: 0 auto; padding: 18px 18px 22px; }
+
+    /* header */
+    .head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+    .head img { width: 30px; height: 30px; }
+    .head h1 { font-size: 18px; font-weight: 700; margin: 0; letter-spacing: 2px; }
+    .sub { font-size: 12.5px; color: var(--muted); margin: 0 0 14px; line-height: 1.45; }
+
+    /* camera card */
+    .cam { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 14px;
+      overflow: hidden; background: #000; border: 1px solid var(--line); }
+    .cam video, .cam canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .cam video { transform: scaleX(-1); object-fit: cover; }
+    .status-pill { position: absolute; left: 10px; bottom: 10px; z-index: 3;
+      background: rgba(0,0,0,.6); backdrop-filter: blur(4px); color: #fff;
+      font-size: 12px; font-weight: 600; padding: 5px 11px; border-radius: 999px;
+      display: inline-flex; align-items: center; gap: 7px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); }
+    .dot.on { background: var(--green); box-shadow: 0 0 8px var(--green); }
+    .dot.paused { background: var(--red); box-shadow: 0 0 8px var(--red); }
+    #gesture { position: absolute; right: 10px; top: 10px; z-index: 3;
+      background: rgba(0,0,0,.55); color: var(--amber); font-weight: 700; font-size: 13px;
+      padding: 4px 10px; border-radius: 8px; opacity: 0; transition: opacity .15s; }
+    #gesture.show { opacity: 1; }
+
+    /* buttons */
+    .btnrow { display: flex; gap: 8px; margin: 14px 0; }
+    button { flex: 1; border: none; border-radius: 10px; padding: 11px 8px;
+      font-size: 14px; font-weight: 700; cursor: pointer; transition: filter .12s, transform .05s; }
+    button:active { transform: translateY(1px); }
+    .btn-primary { background: var(--amber); color: #ffffff; }
+    .btn-primary:hover { filter: brightness(1.06); }
+    .btn-ghost { background: var(--card2); color: var(--text); border: 1px solid var(--line); }
+    .btn-ghost:hover { background: #2a333b; }
+    .btn-toggle { background: var(--card2); color: var(--text); border: 1px solid var(--line); }
+    .btn-toggle.on { background: var(--green); color: #ffffff; border-color: transparent; }
+
+    /* settings card */
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+      padding: 14px; margin-bottom: 12px; }
+    .card-title { font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
+      color: var(--muted); margin: 0 0 10px; font-weight: 700; }
+    .row { display: grid; grid-template-columns: 110px 1fr 38px; align-items: center;
+      gap: 10px; margin: 9px 0; font-size: 13px; }
+    .row label { color: var(--text); }
+    .row .val { text-align: right; color: var(--amber); font-variant-numeric: tabular-nums; font-weight: 600; }
+    input[type=range] { -webkit-appearance: none; width: 100%; height: 5px; border-radius: 999px;
+      background: var(--line); outline: none; }
+    input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px;
+      border-radius: 50%; background: var(--amber); cursor: pointer; border: 2px solid #1a1f24; }
+
+    /* gestures legend */
+    .legend { display: grid; gap: 8px; }
+    .g { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .gitem { background: var(--card2); border: 1px solid var(--line); border-radius: 9px;
+      padding: 8px 10px; font-size: 12.5px; line-height: 1.35; }
+    .gitem b { color: var(--text); }
+    .gitem span { color: var(--muted); }
+    .gitem.full { grid-column: 1 / -1; }
+    .tip { font-size: 12px; color: var(--muted); margin-top: 10px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="head">
+      <img src="/assets/icons/icon-128.png" alt="Aidly" />
+      <h1>Head &amp; Eye Control</h1>
+    </div>
+    <p class="sub">Control the page with head movements, blinks and a palm gesture. Keep this window beside the page you want to control.</p>
+
+    <div class="cam">
+      <video id="video" autoplay playsinline muted></video>
+      <canvas id="overlay" width="320" height="240"></canvas>
+      <div class="status-pill"><span class="dot" id="statusDot"></span><span id="status2">Ready</span></div>
+      <div id="gesture"></div>
+    </div>
+
+    <div class="btnrow">
+      <button id="startBtn" class="btn-primary">Start</button>
+      <button id="recenterBtn" class="btn-ghost">Recenter</button>
+      <button id="toggleBtn" class="btn-toggle">Enable control</button>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Sensitivity</p>
+      <div class="row"><label>Scroll</label><input id="pitchThresh" type="range" min="6" max="25" value="12"><span class="val" id="pitchThreshVal">12</span></div>
+      <div class="row"><label>Zoom</label><input id="yawThresh" type="range" min="8" max="30" value="16"><span class="val" id="yawThreshVal">16</span></div>
+      <div class="row"><label>Blink</label><input id="blinkThresh" type="range" min="30" max="70" value="45"><span class="val" id="blinkThreshVal">45</span></div>
+      <div class="row"><label>Scroll speed</label><input id="scrollSpeed" type="range" min="40" max="240" value="120"><span class="val" id="scrollSpeedVal">120</span></div>
+    </div>
+
+    <div class="card">
+      <p class="card-title">Gestures</p>
+      <div class="legend">
+        <div class="g">
+          <div class="gitem"><b>Face up</b><br><span>Scroll up</span></div>
+          <div class="gitem"><b>Chin down</b><br><span>Scroll down</span></div>
+          <div class="gitem"><b>Head left</b><br><span>Zoom in</span></div>
+          <div class="gitem"><b>Head right</b><br><span>Zoom out</span></div>
+          <div class="gitem"><b>Double blink</b><br><span>Screenshot</span></div>
+          <div class="gitem"><b>Long blink</b><br><span>Bring to top</span></div>
+        </div>
+        <div class="gitem full"><b>Show palm</b> <span>— pause / resume all control</span></div>
+      </div>
+      <p class="tip">Tip: click Start, look straight ahead, press Recenter, then Enable control.</p>
+    </div>
+  </div>
+
+  <script type="module" src="eye-control.js"></script>
+</body>
+</html>
