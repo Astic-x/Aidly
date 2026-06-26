@@ -23,7 +23,7 @@ const blinkThreshEl = document.getElementById("blinkThresh");
 const scrollSpeedEl = document.getElementById("scrollSpeed");
 const statusDot = document.getElementById("statusDot");
 
-// wire slider value chips
+//****** wire slider value chips ******
 [["pitchThresh"], ["yawThresh"], ["blinkThresh"], ["scrollSpeed"]].forEach(function (a) {
   const el = document.getElementById(a[0]);
   const val = document.getElementById(a[0] + "Val");
@@ -44,7 +44,7 @@ let lastPalmToggle = 0;
 let lastVideoTime = -1;
 let tickWorker = null;
 
-// head-pose neutral baseline + state
+//****** head-pose neutral baseline + state ******
 let basePitch = null, baseYaw = null;
 let calib = [];
 const st = {
@@ -69,9 +69,9 @@ function setDot(cls) {
   statusDot.className = "dot" + (cls ? " " + cls : "");
 }
 
-// ---- (pitch, yaw, roll) degrees from a 4x4 facial transformation matrix ----
+//****** ---- (pitch, yaw, roll) degrees from a 4x4 facial transformation matrix ---- ******
 function eulerFromMatrix(m) {
-  // m.data is column-major Float32Array(16). Build row-major 3x3.
+  //****** m.data is column-major Float32Array(16). Build row-major 3x3. ******
   const d = m.data || m;
   const r00 = d[0], r10 = d[1], r20 = d[2];
   const r01 = d[4], r11 = d[5], r21 = d[6];
@@ -108,7 +108,7 @@ function handleGestures(bl, br, pitch, yaw, now) {
   const leftWink = bl > T && br < T * 0.5;
   const rightWink = br > T && bl < T * 0.5;
 
-  // auto-calibrate neutral head pose
+  //****** auto-calibrate neutral head pose ******
   if (basePitch === null) {
     calib.push([pitch, yaw]);
     if (calib.length >= 25) {
@@ -121,13 +121,13 @@ function handleGestures(bl, br, pitch, yaw, now) {
   let dpitch = basePitch === null ? 0 : pitch - basePitch;
   let dyaw = baseYaw === null ? 0 : yaw - baseYaw;
 
-  // continuously self-recenter while at rest (kills drift / false "chin down")
+  //****** continuously self-recenter while at rest (kills drift / false "chin down") ******
   if (basePitch !== null) {
     if (Math.abs(dpitch) < pitchThr) basePitch += 0.05 * dpitch;
     if (Math.abs(dyaw) < yawThr) baseYaw += 0.05 * dyaw;
   }
 
-  // ---- BLINK: double -> screenshot, long -> bring to top ----
+  //****** ---- BLINK: double -> screenshot, long -> bring to top ---- ******
   if (both) {
     if (st.bothClosedSince === 0) st.bothClosedSince = now;
     if (now - st.bothClosedSince > 1000 && !st.longFired && now - st.lastBring > 1500) {
@@ -149,13 +149,13 @@ function handleGestures(bl, br, pitch, yaw, now) {
     }
   }
 
-  // ---- HEAD YAW -> zoom ----
+  //****** ---- HEAD YAW -> zoom ---- ******
   if (baseYaw !== null && !both && now - st.lastZoom > 600) {
     if (dyaw < -yawThr) { st.lastZoom = now; setGesture("ZOOM IN"); sendCmd("zoomIn"); }
     else if (dyaw > yawThr) { st.lastZoom = now; setGesture("ZOOM OUT"); sendCmd("zoomOut"); }
   }
 
-  // ---- HEAD PITCH -> scroll ----
+  //****** ---- HEAD PITCH -> scroll ---- ******
   if (basePitch !== null && !both && now - st.lastScroll > 60) {
     if (dpitch < -pitchThr) { st.lastScroll = now; sendCmd("scrollUp", speed); setGesture("scroll up"); }
     else if (dpitch > pitchThr) { st.lastScroll = now; sendCmd("scrollDown", speed); setGesture("scroll down"); }
@@ -185,7 +185,7 @@ function loop() {
   if (video.currentTime !== lastVideoTime && video.readyState >= 2) {
     lastVideoTime = video.currentTime;
 
-    // palm -> pause toggle
+    //****** palm -> pause toggle ******
     let palmNow = false;
     if (gestureRecognizer) {
       try {
@@ -194,7 +194,7 @@ function loop() {
           const top = gr.gestures[0][0];
           if (top.categoryName === "Open_Palm" && top.score > 0.5) palmNow = true;
         }
-      } catch (e) { /* ignore */ }
+      } catch (e) { /******* ignore *******/ }
     }
     if (palmNow) {
       setGesture(paused ? "PALM — resume" : "PALM — pause");
@@ -224,8 +224,8 @@ function loop() {
       setDot("");
     }
   }
-  // NOTE: the loop is driven by a Web Worker tick (see boot), not rAF,
-  // so detection keeps running even when this window is minimized.
+  //****** NOTE: the loop is driven by a Web Worker tick (see boot), not rAF, ******
+  //****** so detection keeps running even when this window is minimized. ******
 }
 
 async function boot() {
@@ -257,7 +257,7 @@ async function boot() {
     booted = true;
     status2.textContent = "Recenter, then Enable control";
 
-    // Drive the loop from a Web Worker so it keeps running when minimized.
+    //****** Drive the loop from a Web Worker so it keeps running when minimized. ******
     try {
       tickWorker = new Worker(chrome.runtime.getURL("src/eye-control/eye-control.worker.js"));
       tickWorker.onmessage = () => { try { loop(); } catch (e) { /* ignore */ } };
