@@ -1,6 +1,6 @@
-// Keep-alive ticker for Aidly Head & Eye Control.
-// Web Workers are NOT throttled when the window is minimized/hidden,
-// so this drives the detection loop at full rate even in the background.
+//****** Keep-alive ticker for Aidly Head & Eye Control.
+//****** Web Workers are NOT throttled when the window is minimized/hidden,
+//****** so this drives the detection loop at full rate even in the background.
 let timer = null;
 self.onmessage = function (e) {
   const msg = e.data || {};
