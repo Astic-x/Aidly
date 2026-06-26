@@ -20,13 +20,13 @@
     html, body { margin: 0; background: var(--bg); color: var(--text); }
     #app { width: 380px; margin: 0 auto; padding: 18px 18px 22px; }
 
-    /* header */
+    /******* header *******/
     .head { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
     .head img { width: 30px; height: 30px; }
     .head h1 { font-size: 18px; font-weight: 700; margin: 0; letter-spacing: 2px; }
     .sub { font-size: 12.5px; color: var(--muted); margin: 0 0 14px; line-height: 1.45; }
 
-    /* camera card */
+    /******* camera card *******/
     .cam { position: relative; width: 100%; aspect-ratio: 4/3; border-radius: 14px;
       overflow: hidden; background: #000; border: 1px solid var(--line); }
     .cam video, .cam canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -43,7 +43,7 @@
       padding: 4px 10px; border-radius: 8px; opacity: 0; transition: opacity .15s; }
     #gesture.show { opacity: 1; }
 
-    /* buttons */
+    /******* buttons *******/
     .btnrow { display: flex; gap: 8px; margin: 14px 0; }
     button { flex: 1; border: none; border-radius: 10px; padding: 11px 8px;
       font-size: 14px; font-weight: 700; cursor: pointer; transition: filter .12s, transform .05s; }
@@ -55,7 +55,7 @@
     .btn-toggle { background: var(--card2); color: var(--text); border: 1px solid var(--line); }
     .btn-toggle.on { background: var(--green); color: #ffffff; border-color: transparent; }
 
-    /* settings card */
+    /******* settings card *******/
     .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px;
       padding: 14px; margin-bottom: 12px; }
     .card-title { font-size: 12px; letter-spacing: .04em; text-transform: uppercase;
@@ -69,7 +69,7 @@
     input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 15px; height: 15px;
       border-radius: 50%; background: var(--amber); cursor: pointer; border: 2px solid #1a1f24; }
 
-    /* gestures legend */
+    /******* gestures legend *******/
     .legend { display: grid; gap: 8px; }
     .g { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .gitem { background: var(--card2); border: 1px solid var(--line); border-radius: 9px;
