@@ -1,4 +1,10 @@
-# Aidly
+<p align="center">
+  <img src="assets/images/1.png" alt="Aidly logo" width="160" />
+</p>
+
+<h1 align="center">Aidly</h1>
+
+<p align="center"><em>Hands-free, on-device web accessibility for everyone.</em></p>
 
 **Aidly** is a Chrome (Manifest V3) extension that makes the web more accessible for
 everyone. It bundles a suite of reading aids, low-vision and color-blindness support,
@@ -22,6 +28,26 @@ lookup to `api.dictionaryapi.dev` when you use the double-click dictionary.
 | **Utilities** | Custom cursors, print page, screenshot to clipboard |
 
 See [`docs/FEATURES.md`](docs/FEATURES.md) for the full list and how each one works.
+
+---
+
+## Screenshots
+
+**Reading aids & typography applied to a live page**
+
+![Reading aids applied to a web page](assets/images/5.png)
+
+**Head & Eye Control — sensitivity sliders and the gesture guide**
+
+![Head and Eye Control settings](assets/images/4.png)
+
+**Eye Control window with the live webcam preview**
+
+![Eye Control window with live camera](assets/images/3.png)
+
+**Hands-free gesture controls in action**
+
+![Hands-free gesture controls](assets/images/2.png)
 
 ---
 
